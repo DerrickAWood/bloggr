@@ -1,15 +1,16 @@
 <template>
   <div class="comments col-3">
-    comments go here
-    <p>{{commentsData}}</p>
+    <h5>{{commentData.body}}</h5>
   </div>
 </template>
 
 
 <script>
+
+
 export default {
-  name: "comments",
-  props: ["commentsData"],
+  name: "comment",
+  props: ["commentData"],
   data() {
     return {
     };

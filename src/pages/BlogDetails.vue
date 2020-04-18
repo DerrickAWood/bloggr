@@ -10,6 +10,7 @@
         <button class="btn btn-danger" @click="deleteBlog()">Delete</button>
         <button class="btn btn-warning m-1" v-show="this.$auth.userInfo.email == blog.creatorEmail" @click="editBlog()">Edit</button>
     <comments v-for="comment in comments" :commentData="comment" :key="comment._id"></comments>
+    <create-comment></create-comment>
       </div>
     </div>
   </div>
@@ -17,6 +18,7 @@
 
 
 <script>
+import CreateComment from "../components/CreateComment"
 import Comments from "../components/Comments"
 export default {
   name: "blog-details",
@@ -42,6 +44,6 @@ export default {
       this.$store.dispatch("deleteBlog", this.blog._id);
     }
   },
-  components: { Comments }
+  components: { Comments, CreateComment }
 };
 </script>
