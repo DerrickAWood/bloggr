@@ -7,10 +7,12 @@
         <p>{{blog.body}}</p>
         <p>{{blog.creatorEmail}}</p>
         <button class="btn btn-dark m-1" @click="$router.push({name:'home'})">Back</button>
-        <button class="btn btn-danger" @click="deleteBlog()">Delete</button>
+        <button class="btn btn-danger" v-show="this.$auth.userInfo.email == blog.creatorEmail" @click="deleteBlog()">Delete</button>
     <comments v-for="comment in comments" :commentData="comment" :key="comment._id"></comments>
     <create-comment></create-comment>
-    <edit-Blog></edit-Blog>
+    <button @click="openEditor = !openEditor">Open editor</button>
+    <edit-Blog v-if="openEditor"></edit-Blog>
+    <edit-Comment></edit-Comment>
       </div>
     </div>
   </div>
@@ -18,6 +20,7 @@
 
 
 <script>
+import EditComment from "../components/EditComment"
 import EditBlog from "../components/EditBlog"
 import CreateComment from "../components/CreateComment"
 import Comments from "../components/Comments"
@@ -25,6 +28,7 @@ export default {
   name: "blog-details",
   data() {
     return {
+      openEditor: false
     };
   },
   created() {
@@ -47,6 +51,6 @@ export default {
       this.$store.dispatch("deleteBlog", this.blog._id);
     }
   },
-  components: { Comments, CreateComment, EditBlog }
+  components: { Comments, CreateComment, EditBlog, EditComment }
 };
 </script>

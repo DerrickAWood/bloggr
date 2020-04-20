@@ -54,7 +54,6 @@ export default new Vuex.Store({
 
     async addComment({commit, dispatch}, newComment){
       try {
-        debugger
         let res = await api.post('comments', newComment)
         console.log(newComment);
         dispatch('getBlog', newComment.blogId)
@@ -85,16 +84,35 @@ export default new Vuex.Store({
     async editBlog({commit, dispatch}, payload){
       try {
         console.log(payload);
-        
-        let res = await api.put('blogs/' + payload.blogId, payload)
-        dispatch('getBlog', res.data)
+        // FIXME review payload for blog id
+        let res = await api.put('blogs/' + payload.id, payload)
       } catch (error) {
         console.log(error)
       }
     },
 
-    async getBlog({ commit, dispatch }, id) {
 
+
+
+
+
+
+    async editComment({commit, dispatch}, payload){
+      try {
+        let res = await api.put("comments/" + payload.id, payload)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+
+
+
+
+
+
+
+    async getBlog({ commit, dispatch }, id) {
       try {
         console.log( id , "this is the blog id");
         

@@ -6,7 +6,7 @@
         type="text"
         class="form-control"
         placeholder="Blog..."
-        v-model="changedBlog.title"
+        v-model="blog.title"
       />
     </div>
     <div class="form-group">
@@ -15,7 +15,7 @@
         type="text"
         class="form-control"
         placeholder="img..."
-        v-model="changedBlog.imgUrl"
+        v-model="blog.imgUrl"
       />
     </div>
     <div class="form-group">
@@ -24,7 +24,7 @@
         type="text"
         class="form-control"
         placeholder="body..."
-        v-model="changedBlog.body"
+        v-model="blog.body"
       />
     </div>
     <button class="btn btn-warning m-1" @click="editBlog()">Edit</button>
@@ -37,7 +37,6 @@ export default {
   name: "Edit-Blog",
   data() {
     return {
-      changedBlog: {}
     };
   },
   mounted() {},
@@ -50,10 +49,7 @@ export default {
   },
   methods: {
     editBlog() {
-      this.changedBlog.id = this.blogId
-      this.changedBlog.creatorEmail = this.blog.creatorEmail
-      this.$store.dispatch("editBlog", this.changedBlog);
-      this.changedBlog = {};
+      this.$store.dispatch("editBlog", this.blog);
     }
   },
   components: {}
