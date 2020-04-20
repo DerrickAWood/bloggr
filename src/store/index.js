@@ -21,6 +21,9 @@ export default new Vuex.Store({
     },
     setActiveBlog(state, blog){
       state.activeBlog = blog
+    },
+    setComment(state, comment){
+      state.comment = comment
     }
   },
   actions: {
@@ -48,14 +51,19 @@ export default new Vuex.Store({
       }
     },
 
+
     async addComment({commit, dispatch}, newComment){
       try {
-        let res = await api.post('comment', newComment)
-        dispatch('getComments')
+        debugger
+        let res = await api.post('comments', newComment)
+        console.log(newComment);
+        dispatch('getBlog', newComment.blogId)
       } catch (error) {
         console.error(error)
       }
     },
+
+
     
     async deleteBlog({commit, dispatch}, blogId){
       try {
@@ -66,10 +74,20 @@ export default new Vuex.Store({
       }
     },
 
-    async editBlog({commit, dispatch}, blogId){
+    async deleteComment({ commit, dispatch}, commentId){
       try {
-        await api.put('blogs/' + blogId)
-        dispatch('getBlogs')
+        await api.delete('comments/' + commentId)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+
+    async editBlog({commit, dispatch}, payload){
+      try {
+        console.log(payload);
+        
+        let res = await api.put('blogs/' + payload.blogId, payload)
+        dispatch('getBlog', res.data)
       } catch (error) {
         console.log(error)
       }
@@ -91,6 +109,17 @@ export default new Vuex.Store({
     async getBlogs({commit, dispatch}){
       let res = await api.get('blogs')
       commit('setBlogs', res.data)
+    },
+
+
+
+
+
+
+    async getComment({commit, dispatch}){
+      let res = await api.get('comment')
+      commit('setComment', res.data)
     }
   },
+
 });

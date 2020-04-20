@@ -6,7 +6,7 @@
         type="text"
         class="form-control"
         placeholder="Comment"
-        v-model="newComment.comment"
+        v-model="newComment.body"
       />
     </div>
       <button class="btn btn-warning m-1" @click="addComment()">Add Comment</button>
@@ -25,9 +25,17 @@ export default {
     };
   },
   mounted() {},
-  computed: {},
+  computed: {
+    blog(){
+      return this.$store.state.activeBlog
+    }
+  },
   methods: {
     addComment() {
+      this.newComment.blogId = this.blog.blog._id
+      this.newComment.creatorEmail = this.blog.blog.creatorEmail
+      console.log(this.newComment);
+      
       this.$store.dispatch("addComment", this.newComment);
       this.newComment = {};
     }
